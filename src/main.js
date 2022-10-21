@@ -4,6 +4,7 @@ import router from './router'
 import vuetify from './plugins/vuetify'
 import '@/tailwind.css'
 import store from './store'
+import './registerServiceWorker'
 
 Vue.config.productionTip = false
 
