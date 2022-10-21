@@ -14,7 +14,7 @@
         width="30%"
         height="100"
         raised
-        v-for="cell in cells" :key="cell.id"
+        v-for="cell in cellsP" :key="cell.id"
       >{{ cell }}</v-card>
     </div>
 
@@ -26,7 +26,8 @@
         width="30%"
         height="70"
         raised
-        v-for="cell2 in cells2" :key="cell2.id"
+        v-for="(cell2, index) in cellsP2" :key="index"
+        @click="test(index)"
       >{{ cell2 }}</v-card>
     </div> 
   </div>
@@ -42,12 +43,21 @@
     },
     data() {
       return {
-        cells: [
-          this.$store.state.symbol,
-          this.$store.state.randFour[0],
-          this.$store.state.randFour[1],
-          4,5,6,7,8,9],
-        cells2: [1,2,3,4,5,6,7,8,9,'戻る','消す',0]
+      }
+    },
+    computed: {
+      cellsP() {
+        return this.$store.getters.getRandFour
+      },
+      cellsP2() {
+        return this.$store.getters.getInputBtn
+      },
+    },
+    methods: {
+      test(index) {
+        let tapNum = index + 1
+        this.$store.commit('test', tapNum)
+        this.$store.getters.getRandFour
       }
     }
   }

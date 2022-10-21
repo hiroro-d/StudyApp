@@ -14,7 +14,12 @@ const routes = [
     path: '/HyakuMasu',
     name: 'HyakuMasu',
     component: () => import('../views/HyakuMasu.vue')
-  }
+  },
+  {
+    path: '/HyakuMasu2',
+    name: 'HyakuMasu2',
+    component: () => import('../views/HyakuMasu2.vue')
+  },
 ]
 
 const router = new VueRouter({

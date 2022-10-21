@@ -78,9 +78,7 @@
     methods: {
       startSolo() {
         this.dialog = false;
-        this.$store.commit("startSolo", this.radioGroup_1, this.radioGroup_2)
-        console.log(this.radioGroup_1)
-        console.log(this.radioGroup_2)
+        this.$store.commit("startSolo", {rg1: this.radioGroup_1, rg2: this.radioGroup_2})
       }
     }
   }
