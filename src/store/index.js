@@ -16,9 +16,10 @@ export default new Vuex.Store({
     symbol: '',
 
     //計算用
-    n: 0,
-    x: 0,
-    y: 0,
+    n: 0, //form
+    m: 0, //isActive 色替え用
+    x: 0, //乱数row
+    y: 0, //乱数colum
   },
 
   getters: {
@@ -42,9 +43,10 @@ export default new Vuex.Store({
           state.randFourY.push(Math.floor(Math.random() * 10));
         }
         for(let m = 0; m < 4; m++) {
-          state.formFour.push({form: ''});
+          state.formFour.push({form: '', isActive: false});
         }
       }
+      state.formFour[state.n].isActive = true
     },
     test(state, tn) {
       //0や消す、戻るを修正
@@ -60,6 +62,10 @@ export default new Vuex.Store({
 
       state.formFour[state.n].form += String(tn) //タップした数字がフォームのn番に文字列で追加
       if (state.formFour[state.n].form === String(state.randFourX[state.x] + state.randFourY[state.y])) {
+        state.formFour[state.n].isActive = false
+          if (state.n < 3) {
+            state.formFour[state.n + 1].isActive = true
+          }
         state.n++ //フォームの数字と計算した数が一致したら、隣のフォームへ
         if(state.x === 1) { //となりに移った時に、ｘが端だったら
           state.y++ //↓の行にずれて計算
