@@ -31,25 +31,9 @@
             @click="dialog = false"
           >
             やめる
-            {{aaa}}
           </v-btn>
         </div>
       </v-card>
     </v-dialog>
   </v-row>
 </template>
-
-<script>
-  export default {
-    data () {
-      return {
-        getAllCorrect: false //クリアボタンを作りたいが、現状不可能
-      }
-    },
-    computed: {
-      aaa() {
-        return this.$store.getters.getAllCorrect
-      }
-    },
-  }
-</script>

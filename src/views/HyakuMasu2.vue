@@ -117,7 +117,45 @@
         class="text-center py-2 text-5xl"
       >{{ cell }}</v-card>
     </div>
-    <AllCorrect />
+<!-- 全問正解モーダル -->
+  <v-row justify="center">
+    <v-dialog
+      v-model="getAllCorrect"
+      persistent
+      max-width="290"
+      hide-overlay
+    >
+      <v-card>
+        <v-card-title class="text-h5">
+          やったね！全問正解！
+        </v-card-title>
+        <div class="flex flex-col">
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false"
+          >
+            つづける
+          </v-btn>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false"
+          >
+            モードをかえる
+          </v-btn>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false"
+          >
+            やめる
+          </v-btn>
+        </div>
+      </v-card>
+    </v-dialog>
+  </v-row>
+
   </div>
 </template>
 
@@ -127,15 +165,17 @@
 
 <script>
   import ModalComp from '@/components/ModalComp'
-  import AllCorrect from '@/components/AllCorrect'
+
 
     export default {
     components: {
       ModalComp,
-      AllCorrect,
+
     },
     data() {
       return {
+
+        getAllCorrect: false,
 
         form_1: '', //state直だと最初何も入っておらずエラーが出るためformの入れ物用意
         form_2: '',
@@ -161,6 +201,7 @@
         let tapNum = index + 1
         this.$store.commit('formIn', tapNum)
         this.valueIn()
+        this.getAllCorrect = this.$store.getters.getAllCorrect
       },
 
       valueIn() {
