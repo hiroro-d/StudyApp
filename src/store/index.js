@@ -1,4 +1,5 @@
 import Vue from 'vue'
+// import { RouterLink } from 'vue-router'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
@@ -10,9 +11,10 @@ export default new Vuex.Store({
 
     //問題作成用
     inputBtn: [1,2,3,4,5,6,7,8,9,'★','けす',0],
-    randFourX: [], //ランダム、ランダム、
-    randFourY: [], //ランダム、ランダム、
-    formFour: [], //入力、入力、入力、入力]
+    //マスに入る色々
+    randX: [], 
+    randY: [], 
+    forms: [], 
     symbol: '',
 
     //計算用
@@ -35,59 +37,98 @@ export default new Vuex.Store({
 
   mutations: {
     startSolo(state, {rg1, rg2}) {
-      if(rg2 === 'add') {
-        state.symbol = '+';
-      } else {
-        state.symbol = 'x'
-      }
-      if(rg1 === 'four') {
-        for(let n = 0; n < 2; n++) {
-          state.randFourX.push(Math.floor(Math.random() * 10));
+      //足し算か引き算か
+        if(rg2 === 'add') {
+          state.symbol = '+';
+        } else {
+          state.symbol = 'x'
         }
-        for(let n = 0; n < 2; n++) {
-          state.randFourY.push(Math.floor(Math.random() * 10));
-        }
-        for(let m = 0; m < 4; m++) {
-          state.formFour.push({form: '', isActive: false});
-        }
-      }
-      state.formFour[state.n].isActive = true
+        //４マス
+        if(rg1 === 'four') {
+          for(let n = 0; n < 2; n++) {
+            state.randX.push(Math.floor(Math.random() * 10));
+          }
+          for(let n = 0; n < 2; n++) {
+            state.randY.push(Math.floor(Math.random() * 10));
+          }
+          for(let m = 0; m < 4; m++) {
+            state.forms.push({form: '', isActive: false});
+          }
+          state.forms[state.n].isActive = true
+        } else if (rg1 === 'nine') {
+          //９マス
+          for(let n = 0; n < 3; n++) {
+            state.randX.push(Math.floor(Math.random() * 10));
+          }
+          for(let n = 0; n < 3; n++) {
+            state.randY.push(Math.floor(Math.random() * 10));
+          }
+          for(let m = 0; m < 9; m++) {
+            state.forms.push({form: '', isActive: false});
+          }
+          state.forms[state.n].isActive = true
+        }    
     },
+
     formIn(state, tn) {
       //0や消す、戻るを修正
       if(tn === 12) {
         tn = 0
       } else if (tn === 11) {
-        state.formFour[state.n].form = ''
+        state.forms[state.n].form = ''
         tn = ''
       } else if (tn === 10) {
         console.log('戻る')
         tn = ''
       }
 
-      if(state.formFour[state.n].form.length < 2) { //2桁指定
+      if(state.forms[state.n].form.length < 2) { //2桁指定
         //タップした数字がフォームのn番に文字列で追加
-        state.formFour[state.n].form += String(tn)
+        state.forms[state.n].form += String(tn)
       }
-      if (state.formFour[state.n].form === String(state.randFourX[state.x]
-         + state.randFourY[state.y])) { //入力と答えが一致したら
-        state.formFour[state.n].isActive = false //色変え
-          if (state.n < 3) {
-            state.formFour[state.n + 1].isActive = true
+
+      if(state.symbol === '+') { //もし足し算なら
+
+        if (state.forms[state.n].form === String(state.randX[state.x]
+          + state.randY[state.y])) { //入力と答えが一致したら
+          state.forms[state.n].isActive = false //色変え
+            if (state.n < 3) {
+              state.forms[state.n + 1].isActive = true
+            }
+
+          if(state.forms[3].form === String(state.randX[1] + state.randY[1])) {
+            //最後の問題が正解したら
+            state.corectDialog = true
+              }
+
+          state.n++ //フォームの数字と計算した数が一致したら、隣のフォームへ
+          if(state.x === 1) { //となりに移った時に、ｘが端だったら
+            state.y++ //↓の行にずれて計算
+            state.x--
+          } else {  //そうでなければ、隣で計算
+            state.x++
           }
+        }
+      } else if (state.symbol === 'x') { //かけ算なら
+        if (state.forms[state.n].form === String(state.randX[state.x]
+          * state.randY[state.y])) { //入力と答えが一致したら
+          state.forms[state.n].isActive = false //色変え
+            if (state.n < 3) {
+              state.forms[state.n + 1].isActive = true
+            }
 
-      if(state.formFour[3].form === String(state.randFourX[1] + state.randFourY[1])) {
-        //最後の問題が正解したら
-        state.corectDialog = true
+          if(state.forms[3].form === String(state.randX[1] * state.randY[1])) {
+            //最後の問題が正解したら
+            state.corectDialog = true
+              }
+
+          state.n++ //フォームの数字と計算した数が一致したら、隣のフォームへ
+          if(state.x === 1) { //となりに移った時に、ｘが端だったら
+            state.y++ //↓の行にずれて計算
+            state.x--
+          } else {  //そうでなければ、隣で計算
+            state.x++
           }
-
-
-        state.n++ //フォームの数字と計算した数が一致したら、隣のフォームへ
-        if(state.x === 1) { //となりに移った時に、ｘが端だったら
-          state.y++ //↓の行にずれて計算
-          state.x--
-        } else {  //そうでなければ、隣で計算
-          state.x++
         }
       }
     }

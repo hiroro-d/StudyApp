@@ -73,11 +73,25 @@
         radioGroup_1: '',
         radioGroup_2: '',
 
-        link: '/'
+       
       }
     },
     mounted() {
       this.dialog = true;
+    },
+    computed: {
+      link() {
+        if (this.radioGroup_1 === 'four' && 
+          this.radioGroup_2 === 'add' | this.radioGroup_2 === 'multi') {
+          return '/FourSquares'
+        } else if (this.radioGroup_1 === 'nine' &&  
+          this.radioGroup_2 === 'add' | this.radioGroup_2 === 'multi') {
+          return '/NineSquares'
+        } else if (this.radioGroup_1 === 'sixteen' &&  
+          this.radioGroup_2 === 'add' | this.radioGroup_2 === 'multi') {
+          return '/SixteenSquares'
+       } return 'mitei'
+      }
     },
     methods: {
       startSolo() {

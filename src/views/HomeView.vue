@@ -78,9 +78,9 @@ import NavBar from '@/components/NavBar'
     },
     data: () => ({
       cards: [
-        { title: '', src: require('@/assets/Hyakumasu.jpg'), flex: 12, link: '/HyakuMasu2' },
-        { title: 'Favorite road trips', src: 'https://cdn.vuetifyjs.com/images/cards/road.jpg', flex: 6, link: '/HyakuMasu2' },
-        { title: 'Best airlines', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 6, link: '/HyakuMasu2' },
+        { title: '', src: require('@/assets/Hyakumasu.jpg'), flex: 12, link: '/ModeSerrect' },
+        { title: 'Favorite road trips', src: 'https://cdn.vuetifyjs.com/images/cards/road.jpg', flex: 6, link: '/ModeSerrect' },
+        { title: 'Best airlines', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 6, link: '/ModeSerrect' },
       ],
     }),
   }

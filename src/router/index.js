@@ -16,9 +16,24 @@ const routes = [
     component: () => import('../views/HyakuMasu.vue')
   },
   {
-    path: '/HyakuMasu2',
-    name: 'HyakuMasu2',
-    component: () => import('../views/HyakuMasu2.vue')
+    path: '/ModeSerrect',
+    name: 'ModeSerrect',
+    component: () => import('../views/ModeSerrect.vue')
+  },
+  {
+    path: '/FourSquares',
+    name: 'FourSquares',
+    component: () => import('../views/FourSquares.vue')
+  },
+  {
+    path: '/NineSquares',
+    name: 'NineSquares',
+    component: () => import('../views/NineSquares.vue')
+  },
+  {
+    path: '/SixteenSquares',
+    name: 'SixteenSquares',
+    component: () => import('../views/SixteenSquares.vue')
   },
 ]
 
