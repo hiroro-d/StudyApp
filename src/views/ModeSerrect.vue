@@ -73,7 +73,6 @@
         radioGroup_1: '',
         radioGroup_2: '',
 
-       
       }
     },
     mounted() {
@@ -90,7 +89,7 @@
         } else if (this.radioGroup_1 === 'sixteen' &&  
           this.radioGroup_2 === 'add' | this.radioGroup_2 === 'multi') {
           return '/SixteenSquares'
-       } return 'mitei'
+        } return 'mitei'
       }
     },
     methods: {

@@ -47,27 +47,24 @@
       >{{ this.$store.state.randY[0] }}</v-card>
 <!-- form_1 -->      
       <v-card
-        :color="isActive_1 === true ? 'red lighten-4' : 'indigo lighten-5'"
+        :color="forms[0].isActive === true ? 'red lighten-4' : 'indigo lighten-5'"
         outlined
         max-width="1/3"
         width="30%"
         height="100"
         raised
         class="text-center py-4 text-7xl"
-        v-bind:class="{correct: isActive_1}"
-
-      >{{ form_1 }}</v-card>
+      >{{ forms[0].form }}</v-card>
 <!-- form_2 -->      
       <v-card
-        :color="isActive_2 === true ? 'red lighten-4' : 'indigo lighten-5'"
+        :color="forms[1].isActive === true ? 'red lighten-4' : 'indigo lighten-5'"
         outlined
         max-width="1/3"
         width="30%"
         height="100"
         raised
         class="text-center py-4 text-7xl"
-        v-bind:class="{correct: isActive_2}"
-      >{{ form_2 }}</v-card>
+      >{{ forms[1].form }}</v-card>
 <!-- rand_y2 -->       
       <v-card
         color="white"
@@ -80,26 +77,24 @@
       >{{ this.$store.state.randY[1] }}</v-card>
 <!-- form_3 -->      
       <v-card
-        :color="isActive_3 === true ? 'red lighten-4' : 'indigo lighten-5'"
+        :color="forms[2].isActive === true ? 'red lighten-4' : 'indigo lighten-5'"
         outlined
         max-width="1/3"
         width="30%"
         height="100"
         raised
         class="text-center py-4 text-7xl"
-        v-bind:class="{correct: isActive_3}"
-      >{{ form_3 }}</v-card>
+      >{{ forms[2].form }}</v-card>
 <!-- form_4 -->      
       <v-card
-        :color="isActive_4 === true ? 'red lighten-4' : 'indigo lighten-5'"
+        :color="forms[3].isActive === true ? 'red lighten-4' : 'indigo lighten-5'"
         outlined
         max-width="1/3"
         width="30%"
         height="100"
         raised
         class="text-center py-4 text-7xl"
-        v-bind:class="{correct: isActive_4}"
-      >{{ form_4 }}</v-card>
+      >{{ forms[3].form }}</v-card>
     </div>
 
     <div class="flex flex-wrap w-full justify-center mt-5 ml-10%">
@@ -131,21 +126,21 @@
           <v-btn
             color="green darken-1"
             text
-            @click="dialog = false"
+            @click="prepare"
           >
             つづける
           </v-btn>
           <v-btn
             color="green darken-1"
             text
-            @click="dialog = false"
+            @click="modeChange"
           >
             モードをかえる
           </v-btn>
           <v-btn
             color="green darken-1"
             text
-            @click="dialog = false"
+            :to="link"
           >
             やめる
           </v-btn>
@@ -172,20 +167,7 @@
     },
     data() {
       return {
-
         getAllCorrect: false,
-
-        form_1: '', //state直だと最初何も入っておらずエラーが出るためformの入れ物用意
-        form_2: '',
-        form_3: '',
-        form_4: '',
-
-        isActive_1: '',//タイルの色変化用
-        isActive_2: '',
-        isActive_3: '',
-        isActive_4: '',
-
-
       }
     },
 
@@ -193,26 +175,27 @@
       cells() {
         return this.$store.getters.getInputBtn
       },
+      forms() {
+        return this.$store.state.forms
+      },
+      link() {
+          return '/'
+        } 
     },
     methods: {
       formIn(index) {
         let tapNum = index + 1
         this.$store.commit('formIn', tapNum)
-        this.valueIn()
         this.getAllCorrect = this.$store.getters.getAllCorrect
       },
+      prepare() {
+        this.$store.commit('prepare')
+        this.getAllCorrect = false
+        this.$store.commit('startSolo')
+      },
+      modeChange() {
 
-      valueIn() {
-          this.form_1 = this.$store.state.forms[0].form
-          this.form_2 = this.$store.state.forms[1].form
-          this.form_3 = this.$store.state.forms[2].form
-          this.form_4 = this.$store.state.forms[3].form
-
-          this.isActive_1 = this.$store.state.forms[0].isActive
-          this.isActive_2 = this.$store.state.forms[1].isActive
-          this.isActive_3 = this.$store.state.forms[2].isActive
-          this.isActive_4 = this.$store.state.forms[3].isActive
-        },
+      },
       }
     }
 </script>
